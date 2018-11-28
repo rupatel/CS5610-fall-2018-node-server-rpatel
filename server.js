@@ -4,18 +4,11 @@ const universityDao = require('./daos/university.dao.server');
 var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-app.get('/hello',(req,res) => {
-    res.send('hello world')
-});
-
 require('./data/db')();
 
-universityDao.truncateDatabase().then((res,rej) =>{
-    console.log('database truncated...');
-    universityDao.populateDatabase().then(
-        console.log('database populated...')
-    )
-}
-);
+const universityService = require('./services/university.service.server')(app);
+const questionService = require('./services/question.service.server')(app);
+const answerService = require('./services/answer.service.server')(app);
+const studentService = require('./services/student.service.server')(app);
+
 app.listen(3000);
