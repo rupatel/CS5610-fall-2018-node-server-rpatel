@@ -9,12 +9,7 @@ const findStudentById= id => {
     return studentModel.find({_id:id});
 };
 const removeAll = () => {
-    studentModel.deleteMany({ },function (err) {
-        if(err)
-            console.log(err);
-        else
-            console.log('removed all students');
-    });
+    return studentModel.deleteMany({ }).exec();
 };
 module.exports = {
     findAllStudents,

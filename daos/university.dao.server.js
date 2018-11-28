@@ -1,15 +1,17 @@
 const answerDao = require('./answer.dao.server');
 const questionDao = require('./question.dao.server');
 const studentDao = require('./student.dao.server');
+const quizWidgetDao = require('./quizwidget.dao.server');
 const mongoose = require('mongoose');
 
 const truncateDatabase = () => {
-    answerDao.removeAll();
-    questionDao.removeAll();
-    studentDao.removeAll();
+    return answerDao.removeAll().then(
+        quizWidgetDao.removeAll()).then(
+        questionDao.removeAll()).then(
+        studentDao.removeAll());
 };
 const populateDatabase = () => {
-    studentDao.createStudent({
+    return studentDao.createStudent({
         _id: 123,
         type: 'STUDENT',
         username: 'alice',
@@ -128,6 +130,11 @@ const populateDatabase = () => {
                 multipleChoiceAnswer: 4
             }
         )
+    ).then(
+        quizWidgetDao.createQuizWidget({
+            _id: 1,
+            questions: [321, 432, 543]
+        })
     )
 };
 

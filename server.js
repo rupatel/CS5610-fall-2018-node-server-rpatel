@@ -11,6 +11,11 @@ app.get('/hello',(req,res) => {
 
 require('./data/db')();
 
-universityDao.truncateDatabase();
-//universityDao.populateDatabase();
+universityDao.truncateDatabase().then((res,rej) =>{
+    console.log('database truncated...');
+    universityDao.populateDatabase().then(
+        console.log('database populated...')
+    )
+}
+);
 app.listen(3000);

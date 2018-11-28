@@ -10,12 +10,7 @@ const findAllQuestions= () => {
     return questionModel.find();
 };
 const removeAll = () => {
-    questionModel.deleteMany({ },function (err) {
-        if(err)
-            console.log(err);
-        else
-            console.log('removed all answers');
-    });
+    return questionModel.deleteMany({ }).exec();
 };
 module.exports = {
     findQuestionById,

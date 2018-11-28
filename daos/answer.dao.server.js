@@ -23,12 +23,7 @@ const findAllAnswers = () => {
     return answerModel.find();
 };
 const removeAll = () => {
-    answerModel.deleteMany({ },function (err) {
-        if(err)
-            console.log(err);
-        else
-            console.log('removed all answers');
-    });
+    return answerModel.deleteMany({ }).exec();
 };
 module.exports = {
     findAnswerById,
