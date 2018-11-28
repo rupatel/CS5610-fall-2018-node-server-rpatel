@@ -4,17 +4,28 @@ const createQuestion = question => {
 };
 
 const findQuestionById= qId => {
-    return questionModel.find({_id:qId});
+    return questionModel.findOne({_id:qId}).exec();
 };
 const findAllQuestions= () => {
-    return questionModel.find();
+    return questionModel.find().exec();
 };
 const removeAll = () => {
     return questionModel.deleteMany({ }).exec();
+};
+const u = () => {
+    return questionModel.deleteMany({ }).exec();
+};
+const updateQuestion = (id,question) => {
+    return questionModel.updateOne({_id:id},{$set:question}).exec()
+};
+const deleteQuestion = (id) => {
+    return questionModel.deleteOne({_id:id}).exec();
 };
 module.exports = {
     findQuestionById,
     findAllQuestions,
     createQuestion,
-    removeAll
+    removeAll,
+    updateQuestion,
+    deleteQuestion
 };

@@ -1,27 +1,28 @@
 const answerModel = require('../data/models/answer.model.server');
 const mongoose = require('mongoose');
 const answerQuestion = (studentId, questionId, answer) => {
-    answerModel.create({
-        _id: answer._id,
-        trueFalseAnswer: answer.trueFalseAnswer,
-        multipleChoiceAnswer: answer.multipleChoiceAnswer,
-        student: studentId,
-        question: questionId
-    });
+    answer.student = studentId;
+    answer.question = questionId;
+    return answerModel.create(answer);
 };
 
 const findAnswerById = id => {
-    return answerModel.find({_id:id});
+    return answerModel.findOne({_id:id}).exec();
 };
 const findAnswersByQuestion = qId => {
-    return answerModel.find({question:qId});
+    return answerModel.find({question:qId}).exec();
 };
 const findAnswersByStudent = studentId => {
-    return answerModel.find({student:studentId});
+    return answerModel.find({student:studentId}).exec();
 };
 const findAllAnswers = () => {
     return answerModel.find();
 };
+
+const findAnswerByStudentAndQuestion = (sid,qid) => {
+    return answerModel.find({question:qid,student:sid});
+};
+
 const removeAll = () => {
     return answerModel.deleteMany({ }).exec();
 };
@@ -31,5 +32,6 @@ module.exports = {
     findAnswersByStudent,
     findAllAnswers,
     answerQuestion,
-    removeAll
+    removeAll,
+    findAnswerByStudentAndQuestion
 };
